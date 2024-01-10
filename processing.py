@@ -2,7 +2,10 @@ import re
 from nltk.tokenize import word_tokenize 
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer, WordNetLemmatizer
-import pandas as pd
+import nltk
+from nltk import SnowballStemmer
+from nltk.stem import WordNetLemmatizer
+
 
 def tokenize_text(text):
     return word_tokenize(text)
@@ -99,3 +102,28 @@ def preprocess_text(text):
     text = remove_extra_spaces(text)
     text = remove_numbers(text)
     return ' '.join(text)
+
+def stemming(text):
+    spanishstemmer=SnowballStemmer("english")
+    tokens = nltk.tokenize.word_tokenize(text) # crear una lista de tokens
+    stems = [spanishstemmer.stem(token) for token in tokens]
+    str_ = ""
+    for i in stems:
+        if i in '!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~':
+            str_+=i
+        else:
+            str_+=" "+i
+    return str_[1:]
+    
+def lemmatization(text):
+    text = convert_to_lowercase(text)
+    lemmatizer = WordNetLemmatizer()
+    tokens = nltk.tokenize.word_tokenize(text) # crear una lista de tokens
+    stems = [lemmatizer.lemmatize(token) for token in tokens]
+    str_ = ""
+    for i in stems:
+        if i in '!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~':
+            str_+=i
+        else:
+            str_+=" "+i
+    return str_[1:]

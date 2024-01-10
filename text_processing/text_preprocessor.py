@@ -2,6 +2,9 @@ import re
 from nltk.tokenize import word_tokenize 
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer, WordNetLemmatizer
+import nltk
+from nltk import SnowballStemmer
+from nltk.stem import WordNetLemmatizer
 
 class TextPreprocessor:
 
@@ -16,8 +19,32 @@ class TextPreprocessor:
         self.remove_emojis_flag = remove_emojis
         self.remove_numbers_flag = remove_numbers
         self.remove_stopwords_flag= remove_stopwords_flag
-        
-
+    
+    def stemming(self, text):
+        spanishstemmer=SnowballStemmer("english")
+        tokens = nltk.tokenize.word_tokenize(text) # crear una lista de tokens
+        stems = [spanishstemmer.stem(token) for token in tokens]
+        str_ = ""
+        for i in stems:
+            if i in '!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~':
+                str_+=i
+            else:
+                str_+=" "+i
+        return str_[1:]
+    
+    def lemmatization(self, text):
+        text = convert_to_lowercase(text)
+        lemmatizer = WordNetLemmatizer()
+        tokens = nltk.tokenize.word_tokenize(text) # crear una lista de tokens
+        stems = [lemmatizer.lemmatize(token) for token in tokens]
+        str_ = ""
+        for i in stems:
+            if i in '!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~':
+                str_+=i
+            else:
+                str_+=" "+i
+        return str_[1:]
+    
     def remove_characters(self, text):
         if isinstance(text, str):
             return re.sub(r'[^\w\s]', '', text)

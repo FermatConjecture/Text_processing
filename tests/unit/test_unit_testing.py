@@ -11,6 +11,36 @@ def test_remove_characters(text, expected):
     assert remove_characters(text) == expected
 
 @pytest.mark.parametrize("text, expected", [
+    ("Rocks in the tables", "rock in the table"),
+    ("corpora is the best", "corpus is the best"),
+    ("regards", "regard"),
+    ("i am singing in the rain", "i am singing in the rain"),
+    ("you have to read more books", "you have to read more book")
+    
+])
+def test_lemmatization(text, expected):
+    assert lemmatization(text) == expected
+
+@pytest.mark.parametrize("i read books, i read book")
+def test_lemmatization(text, expected):
+    assert lemmatization(text) == expected
+
+@pytest.mark.parametrize("text, expected", [
+    ("Rocks in the tables", 'rock in the tabl'),
+    ("i am singing in the rain", "i am sing in the rain"),
+    ("i used to love rolling in the deep", "i use to love roll in the deep"),
+    ("dancing with the stars", "danc with the star"),
+    ("i am programming", 'i am program')
+    
+])
+def test_stemming(text, expected):
+    assert stemming(text) == expected
+
+@pytest.mark.parametrize("i read books, i read book")
+def test_stemming(text, expected):
+    assert stemming(text) == expected
+
+@pytest.mark.parametrize("text, expected", [
     (['I','like','playing','computer','games'], [ 'like', 'playing', 'computer', 'games']),
     (['hate', 'fast', 'food', 'restaurants'], ['hate', 'fast', 'food', 'restaurants']),
     (['The','best','book','of','all','times','is','from','kafka'], ['best', 'book', 'times', 'kafka'])
